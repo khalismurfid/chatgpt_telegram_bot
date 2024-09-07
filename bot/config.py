@@ -22,9 +22,12 @@ enable_message_streaming = config_yaml.get("enable_message_streaming", True)
 return_n_generated_images = config_yaml.get("return_n_generated_images", 1)
 image_size = config_yaml.get("image_size", "512x512")
 n_chat_modes_per_page = config_yaml.get("n_chat_modes_per_page", 5)
-mongodb_uri = f"mongodb://mongo:{config_env['MONGODB_PORT']}"
 
+# Use MONGO_URI from environment variables if set, fallback to default if not available
+mongodb_uri = os.getenv('MONGO_URI', f"mongodb://localhost:27017")
 
+if not mongodb_uri:
+    raise ValueError("MONGO_URI environment variable is not set")
 
 # chat_modes
 with open(config_dir / "chat_modes.yml", 'r') as f:
