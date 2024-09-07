@@ -13,8 +13,8 @@ with open(config_dir / "config.yml", 'r') as f:
 config_env = dotenv.dotenv_values(config_dir / "config.env")
 
 # config parameters
-telegram_token = os.getenv("TELEGRAM_BOT_TOKEN", config_yaml.get("telegram_token"))
-openai_api_key = os.getenv("OPENAI_API_KEY", config_yaml.get("openai_api_key"))
+telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
+openai_api_key = os.getenv("OPENAI_API_KEY")
 openai_api_base = config_yaml.get("openai_api_base", None)
 allowed_telegram_usernames = config_yaml["allowed_telegram_usernames"]
 new_dialog_timeout = config_yaml["new_dialog_timeout"]
@@ -24,8 +24,6 @@ image_size = config_yaml.get("image_size", "512x512")
 n_chat_modes_per_page = config_yaml.get("n_chat_modes_per_page", 5)
 mongodb_uri = f"mongodb://mongo:{config_env['MONGODB_PORT']}"
 
-print(f"Telegram Token: {telegram_token}")
-print(f"OpenAI API Key: {openai_api_key}")
 
 
 # chat_modes
