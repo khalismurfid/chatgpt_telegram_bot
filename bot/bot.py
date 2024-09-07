@@ -872,5 +872,4 @@ def run_bot() -> None:
 
 
 if __name__ == "__main__":
-    return(config.telegram_token)
     run_bot()
