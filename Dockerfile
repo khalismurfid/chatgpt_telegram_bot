@@ -1,23 +1,24 @@
+# Use an official Python runtime as the base image
 FROM python:3.8-slim
 
-RUN \
-    set -eux; \
-    apt-get update; \
-    DEBIAN_FRONTEND="noninteractive" apt-get install -y --no-install-recommends \
-    python3-pip \
-    build-essential \
-    python3-venv \
-    ffmpeg \
-    git \
-    ; \
-    rm -rf /var/lib/apt/lists/*
+# Set the working directory in the container
+WORKDIR /app
 
-RUN pip3 install -U pip && pip3 install -U wheel && pip3 install -U setuptools==59.5.0
-COPY ./requirements.txt /tmp/requirements.txt
-RUN pip3 install -r /tmp/requirements.txt && rm -r /tmp/requirements.txt
+# Copy the requirements.txt file into the container
+COPY requirements.txt .
 
-COPY . /code
-WORKDIR /code
+# Install the dependencies specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["bash"]
+# Copy the rest of the application code into the container
+COPY . .
 
+# Expose a port if your application needs to listen to a specific port
+# EXPOSE 8000
+
+# Set environment variables
+# (Optional) If you want to hardcode them, but typically set them in Railway's dashboard
+# ENV MONGO_URI="your_mongo_uri"
+
+# Command to run the bot
+CMD ["python3", "bot/bot.py"]
