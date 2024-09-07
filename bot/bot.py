@@ -822,6 +822,7 @@ async def post_init(application: Application):
     ])
 
 def run_bot() -> None:
+    print(config.telegram_token) #DEBUG
     application = (
         ApplicationBuilder()
         .token(config.telegram_token)
